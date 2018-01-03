@@ -29,6 +29,21 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+class Player {
+    constructor(person = 'images/char-boy.png') {
+        this.x = 202;
+        this.y = 380;
+        this.person = person;
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.person), this.x, this.y);
+    }
+
+    update() {
+
+    }
+};
 
 
 // Now instantiate your objects.
@@ -38,6 +53,7 @@ const bug1 = new Enemy();
 const bug2 = new Enemy(143, 100);
 let allEnemies = [ bug1, bug2 ];
 
+const player = new Player();
 
 
 // This listens for key presses and sends the keys to your
