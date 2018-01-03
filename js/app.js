@@ -43,6 +43,18 @@ class Player {
     update() {
 
     }
+
+    handleInput(direction) {
+        if (direction === 'left' && this.x > 0) {
+            this.x = this.x - 101;
+        } else if (direction === 'up' && this.y > 0) {
+            this.y = this.y - 83;
+        } else if (direction === 'right' && this.x < 404) {
+            this.x = this.x + 101;
+        } else if (direction === 'down' && this.y < 380) {
+            this.y = this.y + 83;
+        }
+    }
 };
 
 
