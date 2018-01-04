@@ -1,3 +1,41 @@
 body {
     text-align: center;
 }
+
+#mask, #winning {
+    display: none;
+    width: 505px;
+    height: 570px;
+    z-index: 1;
+    margin: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+#mask {
+    background-color: black;
+    opacity: 0.8;
+}
+
+#winning {
+    text-align: center;
+    font-size: 25px;
+    color: white;
+}
+
+#winning-message {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+button {
+    background-color: green;
+    border-radius: 4px;
+    font-size: 25px;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+}

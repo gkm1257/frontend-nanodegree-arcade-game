@@ -74,6 +74,7 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
+        checkWinning();
     }
 
     /* This is called by the update function and loops through all of the
@@ -99,6 +100,14 @@ var Engine = (function(global) {
                 reset();
             }
         });
+    }
+
+    /* Check if the player touches the water. */
+    function checkWinning() {
+        if (player.y < 48) {
+            document.getElementById('winning').style.display = 'table';
+            document.getElementById('mask').style.display = 'block';
+        }
     }
 
     /* This function initially draws the "game level", it will then call
