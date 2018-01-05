@@ -110,6 +110,11 @@ var Engine = (function(global) {
         }
     }
 
+    /* Replay button event listener. */
+    document.getElementById('replay').addEventListener('click', () => {
+        reset();
+    });
+
     /* This function initially draws the "game level", it will then call
      * the renderEntities function. Remember, this function is called every
      * game tick (or loop of the game engine) because that's how games work -
@@ -177,6 +182,8 @@ var Engine = (function(global) {
     function reset() {
         player.x = 202; // Reset player's position to the initial one
         player.y = 380;
+        document.getElementById('winning').style.display = 'none';
+        document.getElementById('mask').style.display = 'none';
     }
 
     /* Go ahead and load all of the images we know we're going to need to

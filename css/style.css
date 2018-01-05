@@ -5,13 +5,12 @@ body {
 #mask, #winning {
     display: none;
     width: 505px;
-    height: 570px;
+    height: 545px;
     z-index: 1;
     margin: auto;
     position: absolute;
-    top: 0;
+    top: 55px;
     left: 0;
-    bottom: 0;
     right: 0;
 }
 
@@ -32,10 +31,19 @@ body {
 }
 
 button {
-    background-color: green;
     border-radius: 4px;
     font-size: 25px;
-    color: white;
     padding: 12px 24px;
-    border: none;
+    border: 2px solid;
+    font-weight: bold;
+}
+
+#replay {
+    border-color: #4CAF50;
+    background-color: white;
+    color: #4CAF50;
+}
+#replay:hover {
+    background-color: #4CAF50;
+    color: white;
 }
