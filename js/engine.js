@@ -12,6 +12,8 @@
  * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
+let ctxChar; // Declare ctxChar as global variable
+let isStarted = false; // Record game state
 
 var Engine = (function(global) {
     /* Predefine the variables we'll be using within this scope,
@@ -22,11 +24,25 @@ var Engine = (function(global) {
         win = global.window,
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
+        canvasChar = doc.createElement('canvas'), // Character canvas
         lastTime;
 
+        console.log(canvasChar);
+    /* Canvas settings */
     canvas.width = 505;
     canvas.height = 606;
     doc.body.appendChild(canvas);
+    canvas.style.zIndex = 0;
+    canvas.style.position = 'absolute';
+
+    /* Character canvas settings */
+    ctxChar = canvasChar.getContext('2d'); // Character canvas' context
+    canvasChar.width = 505;
+    canvasChar.height = 200;
+    doc.body.appendChild(canvasChar);
+    canvasChar.style.zIndex = 2;
+    canvasChar.style.position = 'relative';
+    canvasChar.style.top = '530px';
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -106,7 +122,32 @@ var Engine = (function(global) {
     function checkWinning() {
         if (player.y < 48) {
             document.getElementById('winning').style.display = 'table';
-            document.getElementById('mask').style.display = 'block';
+            document.getElementById('mask').style.display = '';
+            document.getElementById('mask').style.height = '545px';
+        }
+    }
+
+    /* Start button event listener. */
+    document.getElementById('start').addEventListener('click', () => {
+        updateChar();
+        document.getElementById('start-screen').style.display = 'none';
+        document.getElementById('mask').style.display = 'none';
+        ctxChar.clearRect(0,0,canvasChar.width,canvasChar.height);
+        isStarted = true;
+    });
+
+    /* Update character image according to selector. */
+    function updateChar() {
+        if (selector.x === 0) {
+            player.person = 'images/char-boy.png';
+        } else if (selector.x === 101) {
+            player.person = 'images/char-cat-girl.png';
+        } else if (selector.x === 202) {
+            player.person = 'images/char-horn-girl.png';
+        } else if (selector.x === 303) {
+            player.person = 'images/char-pink-girl.png';
+        } else {
+            player.person = 'images/char-princess-girl.png';
         }
     }
 
@@ -136,9 +177,21 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
+        /* Add character and selector images. */
+        const charImages = [
+            'images/char-boy.png',
+            'images/char-cat-girl.png',
+            'images/char-horn-girl.png',
+            'images/char-pink-girl.png',
+            'images/char-princess-girl.png'
+        ];
+        const selectImage = 'images/Selector.png';
 
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        if (!isStarted) {
+            ctxChar.clearRect(0,0,canvasChar.width,canvasChar.height);
+        }
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -157,6 +210,16 @@ var Engine = (function(global) {
             }
         }
 
+        /* Draw characters images on the screen. */
+        if (!isStarted) {
+            for (col = 0; col < 5; col++)
+            {
+                ctxChar.drawImage(Resources.get(charImages[col]), col * 101, 5);
+            }
+            /* Draw selector image behind characters. */
+            ctxChar.globalCompositeOperation='destination-over';
+        }
+
         renderEntities();
     }
 
@@ -173,6 +236,7 @@ var Engine = (function(global) {
         });
 
         player.render();
+        if (!isStarted) { selector.render(); }
     }
 
     /* This function does nothing but it could have been a good place to
@@ -183,7 +247,10 @@ var Engine = (function(global) {
         player.x = 202; // Reset player's position to the initial one
         player.y = 380;
         document.getElementById('winning').style.display = 'none';
-        document.getElementById('mask').style.display = 'none';
+        document.getElementById('mask').style.height = '660px';
+        document.getElementById('mask').style.display = '';
+        document.getElementById('start-screen').style.display = '';
+        isStarted = false;
     }
 
     /* Go ahead and load all of the images we know we're going to need to
@@ -195,7 +262,12 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 

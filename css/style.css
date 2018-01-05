@@ -2,10 +2,9 @@ body {
     text-align: center;
 }
 
-#mask, #winning {
-    display: none;
+#mask, #winning, #start-screen {
     width: 505px;
-    height: 545px;
+    height: 660px;
     z-index: 1;
     margin: auto;
     position: absolute;
@@ -19,7 +18,21 @@ body {
     opacity: 0.8;
 }
 
+#start-screen {
+    height: 545px;
+    color: white;
+    font-size: 20px;
+    display: table;
+}
+
+#start-message {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 #winning {
+    display: none;
+    height: 545px;
     text-align: center;
     font-size: 25px;
     color: white;
@@ -36,6 +49,16 @@ button {
     padding: 12px 24px;
     border: 2px solid;
     font-weight: bold;
+}
+
+#start {
+    border-color: #008CBA;
+    background-color: white;
+    color: #008CBA;
+}
+#start:hover {
+    background-color: #008CBA;
+    color: white;
 }
 
 #replay {

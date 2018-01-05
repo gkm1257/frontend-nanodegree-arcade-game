@@ -51,6 +51,26 @@ class Player {
     }
 };
 
+class Selector {
+    constructor() {
+        this.x = 0;
+        this.y = 0;
+        this.img = 'images/Selector.png';
+    }
+
+    render() {
+        ctxChar.drawImage(Resources.get(this.img), this.x, this.y);
+    }
+
+    handleInput(direction) {
+        if (direction === 'left' && this.x > 0) {
+            this.x = this.x - 101;
+        } else if (direction === 'right' && this.x < 404) {
+            this.x = this.x + 101;
+        }
+    }
+}
+
 
 // Generate enemies with random number, speed and starting x-coordinate
 let allEnemies = [];
@@ -63,6 +83,7 @@ for (let i = 0; i < enemyNum; i++) {
 }
 
 const player = new Player();
+const selector = new Selector();
 
 
 // This listens for key presses and sends the keys to your
@@ -75,5 +96,9 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    if (isStarted) {
+        player.handleInput(allowedKeys[e.keyCode]);
+    } else {
+        selector.handleInput(allowedKeys[e.keyCode]);
+    }
 });
