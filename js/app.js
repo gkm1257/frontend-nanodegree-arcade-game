@@ -1,47 +1,51 @@
 "use strict";
 
-// Enemies our player must avoid
-var Enemy = function(x, y, speed, startX) {
-    this.x = x || -100; // Initial position
-    this.y = y || 60;
-    this.speed = speed || 50; // Enemy moving speed
-    // Use random starting x position to decrease predictability
-    this.startX = startX || -100;
-    this.sprite = 'images/enemy-bug.png'; // Enemy image
-};
-
-// Update the enemy's position
-// Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-    this.x = this.x + dt * this.speed;
-    if (this.x > 505) {
-        this.x = this.startX;
-    }
-};
-
-// Draw the enemy on the screen
-Enemy.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
-
-class Player {
-    constructor(person = 'images/char-boy.png') {
-        this.x = 202; // Initial position
-        this.y = 380;
-        this.person = person; // Character's image file name
+// Parent class of Enemy, Player and Selector
+class Character {
+    constructor(x, y, sprite) {
+        this.x = x;
+        this.y = y;
+        this.sprite = sprite; // Character's image
     }
 
-    // Draw the player on the screen
+    // Draw the character on the screen
     render() {
-        ctx.drawImage(Resources.get(this.person), this.x, this.y);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+// Enemies our player must avoid
+class Enemy extends Character {
+    constructor(x, y, speed, startX, sprite = 'images/enemy-bug.png') {
+        super(x, y, sprite);
+        this.speed = speed; // Enemy's moving speed
+        this.startX = startX; // Use random starting x position to decrease predictability
     }
 
-    update() {
-
+    render() {
+        super.render();
     }
 
-    // Change positions according to keyboard input
+    // Update the enemy's position
+    // Parameter: dt, a time delta between ticks
+    update(dt) {
+        this.x = this.x + dt * this.speed;
+        if (this.x > 505) {
+            this.x = this.startX;
+        }
+    }
+}
+
+class Player extends Character {
+    constructor(x = 202, y = 380, sprite = 'images/char-boy.png') {
+        super(x, y, sprite);
+    }
+
+    render() {
+        super.render();
+    }
+
+    /* Change positions according to keyboard input */
     handleInput(direction) {
         if (direction === 'left' && this.x > 0) {
             this.x = this.x - 101;
@@ -53,9 +57,54 @@ class Player {
             this.y = this.y + 83;
         }
     }
+
+    /* Check if the player collides with any enemy. */
+    checkCollisions() {
+        allEnemies.forEach((enemy) => {
+            let xDiff = this.x - enemy.x;
+            let yDiff = enemy.y - this.y;
+            if (Math.abs(xDiff) < 65 && yDiff < 83 && yDiff > 0) {
+                this.reset();
+            }
+        });
+    }
+
+    /* Check if the player touches the water. */
+    checkWinning() {
+        if (this.y < 48) {
+            document.getElementsByClassName('winning-screen')[0].style.display = 'table';
+            document.getElementsByClassName('mask')[0].style.display = '';
+            document.getElementsByClassName('mask')[0].style.height = '545px';
+        }
+    }
+
+    /* Reset player's position and other initial settings. */
+    reset() {
+        this.x = 202;
+        this.y = 380;
+        document.getElementsByClassName('winning-screen')[0].style.display = 'none';
+        document.getElementsByClassName('mask')[0].style.height = '660px';
+        document.getElementsByClassName('mask')[0].style.display = '';
+        document.getElementsByClassName('start-screen')[0].style.display = 'table';
+        isStarted = false;
+    }
+
+    /* Update character image according to selector. */
+    updateChar() {
+        if (selector.x === 0) {
+            this.sprite = 'images/char-boy.png';
+        } else if (selector.x === 101) {
+            this.sprite = 'images/char-cat-girl.png';
+        } else if (selector.x === 202) {
+            this.sprite = 'images/char-horn-girl.png';
+        } else if (selector.x === 303) {
+            this.sprite = 'images/char-pink-girl.png';
+        } else {
+            this.sprite = 'images/char-princess-girl.png';
+        }
+    }
 }
 
-/* Add character and selector images. */
 const charImages = [
     'images/char-boy.png',
     'images/char-cat-girl.png',
@@ -63,12 +112,9 @@ const charImages = [
     'images/char-pink-girl.png',
     'images/char-princess-girl.png'
 ];
-const selectImage = 'images/Selector.png';
-class Selector {
-    constructor() {
-        this.x = 0;
-        this.y = 0;
-        this.img = selectImage;
+class Selector extends Character {
+    constructor(x = 0, y = 0, sprite = 'images/Selector.png') {
+        super(x, y, sprite);
     }
 
     render() {
@@ -81,7 +127,7 @@ class Selector {
             /* Draw selector image behind characters. */
             ctxChar.globalCompositeOperation='destination-over';
         }
-        ctxChar.drawImage(Resources.get(this.img), this.x, this.y);
+        ctxChar.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     handleInput(direction) {

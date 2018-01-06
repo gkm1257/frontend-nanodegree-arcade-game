@@ -14,7 +14,6 @@
  * This engine makes the canvas' context (ctx) object globally available to make
  * writing app.js a little simpler to work with.
  */
-let ctxChar; // Declare ctxChar as global variable
 let isStarted = false; // Record game state
 
 var Engine = (function(global) {
@@ -27,6 +26,7 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         canvasChar = doc.createElement('canvas'), // Character canvas
+        ctxChar = canvasChar.getContext('2d'), // Character canvas' context
         lastTime;
 
     /* Canvas settings */
@@ -37,7 +37,6 @@ var Engine = (function(global) {
     canvas.style.position = 'absolute';
 
     /* Character canvas settings */
-    ctxChar = canvasChar.getContext('2d'); // Character canvas' context
     canvasChar.width = 505;
     canvasChar.height = 200;
     doc.body.appendChild(canvasChar);
@@ -80,7 +79,7 @@ var Engine = (function(global) {
      * game loop.
      */
     function init() {
-        reset();
+        player.reset();
         lastTime = Date.now();
         main();
     }
@@ -90,8 +89,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
-        checkWinning();
+        player.checkCollisions();
+        player.checkWinning();
     }
 
     /* This is called by the update function and loops through all of the
@@ -105,57 +104,22 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
-    }
-
-    /* Check if the player collides with any enemy. */
-    function checkCollisions() {
-        allEnemies.forEach((enemy) => {
-            let xDiff = player.x - enemy.x;
-            let yDiff = enemy.y - player.y;
-            if (Math.abs(xDiff) < 65 && yDiff < 83 && yDiff > 0) {
-                reset();
-            }
-        });
-    }
-
-    /* Check if the player touches the water. */
-    function checkWinning() {
-        if (player.y < 48) {
-            document.getElementsByClassName('winning-screen')[0].style.display = 'table';
-            document.getElementsByClassName('mask')[0].style.display = '';
-            document.getElementsByClassName('mask')[0].style.height = '545px';
-        }
+        // player.update();
     }
 
     /* Start button event listener. */
     document.getElementsByClassName('start')[0].addEventListener('click', () => {
         generateEnemies();
-        updateChar();
+        player.updateChar();
         document.getElementsByClassName('start-screen')[0].style.display = 'none';
         document.getElementsByClassName('mask')[0].style.display = 'none';
         ctxChar.clearRect(0,0,canvasChar.width,canvasChar.height);
         isStarted = true;
     });
 
-    /* Update character image according to selector. */
-    function updateChar() {
-        if (selector.x === 0) {
-            player.person = 'images/char-boy.png';
-        } else if (selector.x === 101) {
-            player.person = 'images/char-cat-girl.png';
-        } else if (selector.x === 202) {
-            player.person = 'images/char-horn-girl.png';
-        } else if (selector.x === 303) {
-            player.person = 'images/char-pink-girl.png';
-        } else {
-            player.person = 'images/char-princess-girl.png';
-        }
-    }
-
     /* Replay button event listener. */
     document.getElementsByClassName('replay')[0].addEventListener('click', () => {
-        reset();
+        player.reset();
     });
 
     /* This function initially draws the "game level", it will then call
@@ -219,22 +183,11 @@ var Engine = (function(global) {
         });
 
         player.render();
-        if (!isStarted) { selector.render(); }
+        if (!isStarted) {
+            selector.render();
+        }
     }
 
-    /* This function does nothing but it could have been a good place to
-     * handle game reset states - maybe a new game menu or a game over screen
-     * those sorts of things. It's only called once by the init() method.
-     */
-    function reset() {
-        player.x = 202; // Reset player's position to the initial one
-        player.y = 380;
-        document.getElementsByClassName('winning-screen')[0].style.display = 'none';
-        document.getElementsByClassName('mask')[0].style.height = '660px';
-        document.getElementsByClassName('mask')[0].style.display = '';
-        document.getElementsByClassName('start-screen')[0].style.display = 'table';
-        isStarted = false;
-    }
 
     /* Go ahead and load all of the images we know we're going to need to
      * draw our game level. Then set init as the callback method, so that when
@@ -259,4 +212,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.ctxChar = ctxChar; // Assign ctxChar to the global variable
 })(this);
