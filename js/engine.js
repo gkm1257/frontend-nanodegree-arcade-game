@@ -229,7 +229,7 @@ var Engine = (function(global) {
         document.getElementById('winning').style.display = 'none';
         document.getElementById('mask').style.height = '660px';
         document.getElementById('mask').style.display = '';
-        document.getElementById('start-screen').style.display = '';
+        document.getElementById('start-screen').style.display = 'table';
         isStarted = false;
     }
 

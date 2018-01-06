@@ -49,7 +49,7 @@ class Player {
             this.y = this.y + 83;
         }
     }
-};
+}
 
 /* Add character and selector images. */
 const charImages = [

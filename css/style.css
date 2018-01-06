@@ -18,29 +18,18 @@ body {
     opacity: 0.8;
 }
 
-#start-screen {
+#start-screen, #winning {
     height: 545px;
     color: white;
     font-size: 20px;
-    display: table;
 }
 
-#start-message {
+#start-message, #winning-message {
     display: table-cell;
     vertical-align: middle;
-}
-
-#winning {
-    display: none;
-    height: 545px;
-    text-align: center;
-    font-size: 25px;
-    color: white;
-}
-
-#winning-message {
-    display: table-cell;
-    vertical-align: middle;
+    font-size: 2.2em;
+    font-weight: bold;
+    font-family: sans-serif;
 }
 
 button {
@@ -49,6 +38,7 @@ button {
     padding: 12px 24px;
     border: 2px solid;
     font-weight: bold;
+    margin-top: 30px;
 }
 
 #start {
