@@ -1,3 +1,5 @@
+"use strict";
+
 /* Engine.js
  * This file provides the game loop functionality (update entities and render),
  * draws the initial game board on the screen, and then calls the update and
@@ -120,17 +122,17 @@ var Engine = (function(global) {
     /* Check if the player touches the water. */
     function checkWinning() {
         if (player.y < 48) {
-            document.getElementById('winning').style.display = 'table';
-            document.getElementById('mask').style.display = '';
-            document.getElementById('mask').style.height = '545px';
+            document.getElementsByClassName('winning-screen')[0].style.display = 'table';
+            document.getElementsByClassName('mask')[0].style.display = '';
+            document.getElementsByClassName('mask')[0].style.height = '545px';
         }
     }
 
     /* Start button event listener. */
-    document.getElementById('start').addEventListener('click', () => {
+    document.getElementsByClassName('start')[0].addEventListener('click', () => {
         updateChar();
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('mask').style.display = 'none';
+        document.getElementsByClassName('start-screen')[0].style.display = 'none';
+        document.getElementsByClassName('mask')[0].style.display = 'none';
         ctxChar.clearRect(0,0,canvasChar.width,canvasChar.height);
         isStarted = true;
     });
@@ -151,7 +153,7 @@ var Engine = (function(global) {
     }
 
     /* Replay button event listener. */
-    document.getElementById('replay').addEventListener('click', () => {
+    document.getElementsByClassName('replay')[0].addEventListener('click', () => {
         reset();
     });
 
@@ -226,10 +228,10 @@ var Engine = (function(global) {
     function reset() {
         player.x = 202; // Reset player's position to the initial one
         player.y = 380;
-        document.getElementById('winning').style.display = 'none';
-        document.getElementById('mask').style.height = '660px';
-        document.getElementById('mask').style.display = '';
-        document.getElementById('start-screen').style.display = 'table';
+        document.getElementsByClassName('winning-screen')[0].style.display = 'none';
+        document.getElementsByClassName('mask')[0].style.height = '660px';
+        document.getElementsByClassName('mask')[0].style.display = '';
+        document.getElementsByClassName('start-screen')[0].style.display = 'table';
         isStarted = false;
     }
 

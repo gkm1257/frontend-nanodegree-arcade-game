@@ -1,3 +1,5 @@
+"use strict";
+
 // Enemies our player must avoid
 var Enemy = function(x, y, speed, startX) {
     this.x = x || -100; // Initial position
@@ -12,7 +14,9 @@ var Enemy = function(x, y, speed, startX) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
     this.x = this.x + dt * this.speed;
-    if (this.x > 505) { this.x = this.startX; }
+    if (this.x > 505) {
+        this.x = this.startX;
+    }
 };
 
 // Draw the enemy on the screen

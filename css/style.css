@@ -2,7 +2,9 @@ body {
     text-align: center;
 }
 
-#mask, #winning, #start-screen {
+.mask,
+.start-screen,
+.winning-screen {
     width: 505px;
     height: 660px;
     z-index: 1;
@@ -13,18 +15,19 @@ body {
     right: 0;
 }
 
-#mask {
+.mask {
     background-color: black;
     opacity: 0.8;
 }
 
-#start-screen, #winning {
+.start-screen,
+.winning-screen {
     height: 545px;
     color: white;
     font-size: 20px;
 }
 
-#start-message, #winning-message {
+.message {
     display: table-cell;
     vertical-align: middle;
     font-size: 2.2em;
@@ -41,22 +44,22 @@ button {
     margin-top: 30px;
 }
 
-#start {
+.start {
     border-color: #008CBA;
     background-color: white;
     color: #008CBA;
 }
-#start:hover {
+.start:hover {
     background-color: #008CBA;
     color: white;
 }
 
-#replay {
+.replay {
     border-color: #4CAF50;
     background-color: white;
     color: #4CAF50;
 }
-#replay:hover {
+.replay:hover {
     background-color: #4CAF50;
     color: white;
 }
