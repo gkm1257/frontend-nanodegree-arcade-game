@@ -27,7 +27,6 @@ var Engine = (function(global) {
         canvasChar = doc.createElement('canvas'), // Character canvas
         lastTime;
 
-        console.log(canvasChar);
     /* Canvas settings */
     canvas.width = 505;
     canvas.height = 606;
@@ -177,15 +176,6 @@ var Engine = (function(global) {
             numRows = 6,
             numCols = 5,
             row, col;
-        /* Add character and selector images. */
-        const charImages = [
-            'images/char-boy.png',
-            'images/char-cat-girl.png',
-            'images/char-horn-girl.png',
-            'images/char-pink-girl.png',
-            'images/char-princess-girl.png'
-        ];
-        const selectImage = 'images/Selector.png';
 
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -208,16 +198,6 @@ var Engine = (function(global) {
                  */
                 ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
             }
-        }
-
-        /* Draw characters images on the screen. */
-        if (!isStarted) {
-            for (col = 0; col < 5; col++)
-            {
-                ctxChar.drawImage(Resources.get(charImages[col]), col * 101, 5);
-            }
-            /* Draw selector image behind characters. */
-            ctxChar.globalCompositeOperation='destination-over';
         }
 
         renderEntities();
