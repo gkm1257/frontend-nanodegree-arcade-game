@@ -130,6 +130,7 @@ var Engine = (function(global) {
 
     /* Start button event listener. */
     document.getElementsByClassName('start')[0].addEventListener('click', () => {
+        generateEnemies();
         updateChar();
         document.getElementsByClassName('start-screen')[0].style.display = 'none';
         document.getElementsByClassName('mask')[0].style.display = 'none';

@@ -94,18 +94,21 @@ class Selector {
 }
 
 
-// Generate enemies with random number, speed and starting x-coordinate
-let allEnemies = [];
-let enemyNum = Math.floor(Math.random() * 3) + 5;
-for (let i = 0; i < enemyNum; i++) {
-    let x = -Math.floor(Math.random() * 1000) - 100,
-        y = (i % 3) * 83 + 60,
-        speed = Math.floor(Math.random() * 200) + 250;
-    allEnemies.push(new Enemy(x, y, speed, x));
-}
-
+const allEnemies = [];
 const player = new Player();
 const selector = new Selector();
+
+// Generate enemies with random number, speed and starting x-coordinate
+function generateEnemies() {
+    allEnemies.length = 0;
+    let enemyNum = Math.floor(Math.random() * 3) + 5;
+    for (let i = 0; i < enemyNum; i++) {
+        let x = -Math.floor(Math.random() * 1000) - 100,
+            y = (i % 3) * 83 + 60,
+            speed = Math.floor(Math.random() * 200) + 250;
+        allEnemies.push(new Enemy(x, y, speed, x));
+    }
+}
 
 
 // This listens for key presses and sends the keys to your
