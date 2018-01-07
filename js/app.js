@@ -22,10 +22,6 @@ class Enemy extends Character {
         this.startX = startX; // Use random starting x position to decrease predictability
     }
 
-    render() {
-        super.render();
-    }
-
     // Update the enemy's position
     // Parameter: dt, a time delta between ticks
     update(dt) {
@@ -41,8 +37,9 @@ class Player extends Character {
         super(x, y, sprite);
     }
 
-    render() {
-        super.render();
+    update() {
+        this.checkCollisions();
+        this.checkWinning();
     }
 
     /* Change positions according to keyboard input */
