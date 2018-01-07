@@ -4,7 +4,7 @@
 
 Welcome to the game!! :smile: 
 
-Just load the `index.html` file in your favorite browser and make sure you have the `images` folder. Then you are good to go!
+Just load the `index.html` file in your favorite browser and make sure you have the `images` folder. Or simply click [this link](https://gkm1257.github.io/frontend-nanodegree-arcade-game/). Then you are good to go!
 
 First select the character you like with left and right arrow keys, then press the start button to start the game. 
 
